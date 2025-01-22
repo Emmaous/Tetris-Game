@@ -39,7 +39,7 @@ namespace Tetris_Game
             {
                 NewBlock = RandomBlock();
             }
-            while (block.blockId == NewBlock.blockId);
+            while (block.BlockId == NewBlock.BlockId);
 
             return block;
         }

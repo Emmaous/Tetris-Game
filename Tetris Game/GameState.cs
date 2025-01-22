@@ -91,7 +91,7 @@ namespace Tetris_Game
         {
             foreach (Position p in CurrentBlock.TilePosition())
             {
-                Grid[p.Row, p.Column] = CurrentBlock.blockId;
+                Grid[p.Row, p.Column] = CurrentBlock.BlockId;
             }
 
             if (IsGameOver())

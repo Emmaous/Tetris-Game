@@ -16,7 +16,7 @@ namespace Tetris_Game
             new Position[] { new(0,1), new(1,1), new(2,1) ,new(3,1) }
         };
 
-        public override int blockId => 1; //set I-block ID to 1
+        public override int BlockId => 1; //set I-block ID to 1
         protected override Position StartOffset => new Position(-1,3); //spawns new block in the middle of top row
         protected override Position[][] Tiles => occupTiles; //overrides Tiles property
 

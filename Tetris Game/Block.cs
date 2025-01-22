@@ -13,7 +13,7 @@ namespace Tetris_Game
         //block spawn offset
         protected abstract Position StartOffset { get; }
         //ID for distiguishing blocks
-        public abstract int blockId { get; }
+        public abstract int BlockId { get; }
 
         //variables to handle the block roatation and offset state
         private int rotationState;
