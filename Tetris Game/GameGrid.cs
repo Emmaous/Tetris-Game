@@ -86,7 +86,7 @@ namespace Tetris_Game
         }
 
         //method to clear complete rows
-        private int ClearCompleteRows()
+        public int ClearCompleteRows()
         {
             int clearedRows = 0;
 
@@ -97,7 +97,7 @@ namespace Tetris_Game
                     ClearRow(row);
                     clearedRows++;
                 }
-                else if (clearedRows>0)
+                else if (clearedRows > 0)
                 {
                     MoveDown(row, clearedRows);
                 }

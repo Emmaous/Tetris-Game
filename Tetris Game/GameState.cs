@@ -94,6 +94,8 @@ namespace Tetris_Game
                 Grid[p.Row, p.Column] = CurrentBlock.BlockId;
             }
 
+            Grid.ClearCompleteRows();
+
             if (IsGameOver())
             {
                 GameOver = true;

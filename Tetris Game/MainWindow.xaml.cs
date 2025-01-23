@@ -110,13 +110,30 @@ namespace Tetris_Game
             DrawBlock(gameState.CurrentBlock);
         }
 
+        //Method to handle game loop
+        private async Task Gameloop ()
+        {
+            DrawGame(gameState);//start game
+
+            while (!gameState.GameOver)
+            {
+                await Task.Delay(500); //500ms delay before block moves down
+                gameState.MoveBlockDown();
+                DrawGame(gameState);
+            }
+
+            GameOverMenu.Visibility = Visibility.Visible;
+        }
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            //checking current game state
             if (gameState.GameOver)
             {
                 return;
             }
 
+            //handling key presses for the Up, Down, Left, Right and R keys
             switch(e.Key)
             {
                 case Key.Left:
@@ -131,7 +148,7 @@ namespace Tetris_Game
                 case Key.Up:
                     gameState.RotateBlockCW(); 
                     break;
-                case Key.Z:
+                case Key.R:
                     gameState.RotateBlockCCW(); 
                     break;
                 default:
@@ -141,14 +158,16 @@ namespace Tetris_Game
             DrawGame(gameState);
         }
 
-        private void TetrisCanvas_Loaded(object sender, RoutedEventArgs e)
+        private async void TetrisCanvas_Loaded(object sender, RoutedEventArgs e)
         {
-            DrawGame(gameState);
+            await Gameloop();
         }
 
-        private void RestartGame_CLick(object sender, RoutedEventArgs e)
+        private async void RestartGame_CLick(object sender, RoutedEventArgs e)
         {
-
+            gameState = new GameState();
+            GameOverMenu.Visibility= Visibility.Hidden;
+            await Gameloop();
         }
     }
 }
