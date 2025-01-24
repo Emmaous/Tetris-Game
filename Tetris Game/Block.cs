@@ -16,7 +16,7 @@ namespace Tetris_Game
         public abstract int BlockId { get; }
 
         //variables to handle the block roatation and offset state
-        private int rotationState;
+        private int rotationState = 0;
         private Position offsetState;
 
         //constructor

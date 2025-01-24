@@ -10,7 +10,7 @@ namespace Tetris_Game
     {
         private readonly Position[][] occupTiles = new Position[][] // array representing all possible position of the J-block
        {
-            new Position[] { new(0,0), new(0,1), new(1,1) ,new(1,2) },
+            new Position[] { new(0,0), new(1,0), new(1,1) ,new(1,2) },
             new Position[] { new(0,1), new(0,2), new(1,1) ,new(2,1) },
             new Position[] { new(1,0), new(1,1), new(1,2) ,new(2,2) },
             new Position[] { new(0,1), new(1,1), new(2,0) ,new(2,1) }
