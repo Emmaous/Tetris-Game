@@ -69,7 +69,7 @@ namespace Tetris_Game
                     };
 
                     //setting the canvas
-                    Canvas.SetTop(imageControl, (r - 2) * cellSize); //setting the start of the cavas to be 2 rows from the top to allow space for spawning
+                    Canvas.SetTop(imageControl, (r - 2) * cellSize + 10); //setting the start of the cavas to be 2 rows from the top to allow space for spawning
                     Canvas.SetLeft(imageControl, c * cellSize);
                     TetrisCanvas.Children.Add(imageControl); //making the image controls a child of the canvas
                     imageControls[r, c] = imageControl;
@@ -163,6 +163,7 @@ namespace Tetris_Game
             await Gameloop();
         }
 
+        //Method to handle restarting game when restart button is clicked
         private async void RestartGame_CLick(object sender, RoutedEventArgs e)
         {
             gameState = new GameState();
