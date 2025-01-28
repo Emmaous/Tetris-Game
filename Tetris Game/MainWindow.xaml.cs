@@ -103,11 +103,19 @@ namespace Tetris_Game
             }
         }
 
+        //method to preview the next block
+        private void PreviewNextBlock(BlockQueue blockQueue)
+        {
+            Block next = blockQueue.NewBlock;
+            NextBlock.Source = blockImages[next.BlockId];
+        }
+
         //Method to draw the game according to current game state
         private void DrawGame(GameState gameState)
         {
             DrawGrid(gameState.Grid);
             DrawBlock(gameState.CurrentBlock);
+            PreviewNextBlock(gameState.Queue);
         }
 
         //Method to handle game loop
