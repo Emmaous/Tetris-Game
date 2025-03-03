@@ -33,6 +33,11 @@ namespace Tetris_Game
         public GameGrid Grid { get; }
         public BlockQueue Queue { get; }
         public bool GameOver { get; private set; }
+        public int GameScore { get; private set; }
+        public Block HeldBlock { get; private set; }
+
+        //bool for if a block is being held
+        public bool Holding { get; private set; }
 
         //constructor
         public GameState() 
@@ -40,6 +45,7 @@ namespace Tetris_Game
             Grid = new GameGrid(22, 10);
             Queue = new BlockQueue();
             CurrentBlock = Queue.GetAndUpdate();
+            Holding = true;
         }
 
         //method to check if block fits in space
@@ -53,6 +59,31 @@ namespace Tetris_Game
                 }
             }
             return true;
+        }
+
+        //method to hold a block
+        public void HoldBlock()
+        {
+            Block temp;
+
+            if (!Holding)
+            {
+                return;
+            }
+
+            if (HeldBlock == null)
+            {
+                HeldBlock = CurrentBlock;
+                CurrentBlock = Queue.GetAndUpdate();
+            } 
+            else
+            {
+                temp = CurrentBlock;
+                CurrentBlock = HeldBlock;
+                HeldBlock = temp;
+            }
+
+            Holding = false;
         }
 
         //method to rotate block clockwise
@@ -89,6 +120,19 @@ namespace Tetris_Game
                 CurrentBlock.MoveBlock(0, -1);
         }
 
+        //method to move the block down
+        public void MoveBlockDown()
+        {
+            CurrentBlock.MoveBlock(1, 0);
+
+            if (!BlockFitsSpace())
+            {
+                CurrentBlock.MoveBlock(-1, 0);
+                PlaceBlock();
+            }
+
+        }
+
         //method to check if the game is over
         private bool IsGameOver()
         {
@@ -103,7 +147,7 @@ namespace Tetris_Game
                 Grid[p.Row, p.Column] = CurrentBlock.BlockId;
             }
 
-            Grid.ClearCompleteRows();
+            GameScore += Grid.ClearCompleteRows();
 
             if (IsGameOver())
             {
@@ -112,19 +156,40 @@ namespace Tetris_Game
             else
             {
                 CurrentBlock = Queue.GetAndUpdate();
+                Holding = true;
             }
         }
 
-        public void MoveBlockDown()
+        //method to check drop distance for each tile
+        private int TileDropDistance(Position p)
         {
-            CurrentBlock.MoveBlock(1, 0);
+            int drop = 0;
 
-            if (!BlockFitsSpace())
+            while(Grid.IsEmpty(p.Row + drop + 1, p.Column))
             {
-                CurrentBlock.MoveBlock(-1, 0);
-                PlaceBlock();
+                drop++;
             }
 
+            return drop;
+        }
+
+        //method to check minimum block drop distance
+        public int BlockDropDistance()
+        {
+            int drop = Grid.Rows;
+
+            foreach (Position p in CurrentBlock.TilePosition())
+            {
+                drop = System.Math.Min(drop, TileDropDistance(p));
+            }
+
+            return drop;
+        }
+
+        public void DropBlock()
+        {
+            CurrentBlock.MoveBlock(BlockDropDistance(), 0);
+            PlaceBlock();
         }
     }
 }
